@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Driven Public Health Chatbot</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f8ff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #0077cc;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #005fa3;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 20px;
+      display: block;
+    }
+
+    nav a:hover {
+      background: #004080;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    /* Chatbot Styles */
+    .chat-box {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fafafa;
+    }
+
+    .bot-message,
+    .user-message {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 20px;
+      max-width: 75%;
+    }
+
+    .bot-message {
+      background: #e1f0ff;
+      color: #003366;
+      text-align: left;
+    }
+
+    .user-message {
+      background: #0077cc;
+      color: #fff;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .input-area {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .input-area button {
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background: #005fa3;
+    }
+
+    /* Newspaper Style for Rural Cases */
+    .headline {
+      border-left: 5px solid #0077cc;
+      background: #f0f6ff;
+      padding: 10px;
+      margin: 10px 0;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    /* Login Page */
+    #login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #eef6ff;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #0077cc;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #005fa3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+      background: #0077cc;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Page -->
+  <section id="login" class="active">
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Enter Username">
+      <input type="password" id="password" placeholder="Enter Password">
+      <button onclick="login()">Login</button>
+      <p id="login-error" style="color:red; margin-top:10px;"></p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div id="main-content" style="display:none;">
+    <header>
+      <h1>AI-Driven Public Health Chatbot</h1>
+      <p>For Disease Awareness and Support</p>
+    </header>
+
+    <nav>
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('about')">About</a>
+      <a href="#" onclick="showPage('chatbot')">Chatbot</a>
+      <a href="#" onclick="showPage('research')">Research</a>
+      <a href="#" onclick="showPage('rural')">Rural Cases</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+    </nav>
+
+    <div class="container">
+      <!-- Home Page -->
+      <section id="home" class="active">
+        <h2>Welcome</h2>
+        <p>This Smart India Hackathon project introduces an <b>AI-driven chatbot</b> designed to spread awareness about common diseases, prevention, and healthy practices.</p>
+        <p>It is especially useful in <b>rural and underserved areas</b> where access to doctors and health information is limited.</p>
+      </section>
+
+      <!-- About Page -->
+      <section id="about">
+        <h2>About the Project</h2>
+        <p>The chatbot provides quick, reliable, and easy-to-understand information about public health issues.</p>
+        <ul>
+          <li>🩺 Spreads awareness about common diseases.</li>
+          <li>🌍 Bridges healthcare information gap in rural areas.</li>
+          <li>⚡ Available 24/7, anytime and anywhere.</li>
+          <li>📱 Works on simple devices with minimal internet.</li>
+        </ul>
+      </section>
+
+      <!-- Chatbot Page -->
+      <section id="chatbot">
+        <h2>Health Chatbot</h2>
+        <div class="chat-box" id="chat-box">
+          <div class="bot-message">👋 Hello! I’m your Health Awareness Assistant. How can I help you today?</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="user-input" placeholder="Type your message...">
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </section>
+
+      <!-- Research Page -->
+      <section id="research">
+        <h2>Research & References</h2>
+        <p>Here are some helpful research resources:</p>
+        <ul>
+          <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7276825/" target="_blank">AI Chatbots in Healthcare (NCBI)</a></li>
+          <li><a href="https://www.frontiersin.org/articles/10.3389/fpubh.2020.00416/full" target="_blank">Role of Chatbots in Public Health</a></li>
+          <li><a href="https://arxiv.org/abs/2007.03495" target="_blank">Conversational AI for Disease Awareness</a></li>
+        </ul>
+      </section>
+
+      <!-- Rural Cases Page -->
+      <section id="rural">
+        <h2>Rural Cases: Why This Chatbot is Needed</h2>
+        <div class="headline">📰 "Villagers in Maharashtra travel 30 km for basic fever treatment due to no nearby doctor."</div>
+        <div class="headline">📰 "Women hesitate to discuss mental health openly, suffer silently without support."</div>
+        <div class="headline">📰 "Children in rural areas face malnutrition and lack awareness of hygiene practices."</div>
+        <div class="headline">📰 "Diabetes and hypertension cases rising in villages, but awareness is very low."</div>
+        <div class="headline">📰 "Lack of timely health information worsens seasonal disease outbreaks in rural India."</div>
+        <p><b>How the Chatbot Helps:</b> Provides 24/7 trusted information, reduces stigma, spreads awareness, and connects villagers with nearby health resources.</p>
+      </section>
+
+      <!-- Contact Page -->
+      <section id="contact">
+        <h2>Contact Us</h2>
+        <p>📧 Email: healthchatbot@sih.gov.in</p>
+        <p>📞 Phone: +91-9876543210</p>
+        <p>🏢 Address: SIH Innovation Center, India</p>
+      </section>
+    </div>
+
+    <footer>
+      <p>© 2025 AI-Driven Public Health Chatbot | Smart India Hackathon Project</p>
+    </footer>
+  </div>
+
+  <script>
+    // Login Function
+    function login() {
+      let user = document.getElementById("username").value.trim();
+      let pass = document.getElementById("password").value.trim();
+      let error = document.getElementById("login-error");
+
+      if (user === "" || pass === "") {
+        error.innerText = "⚠️ Please enter both username and password.";
+        return;
+      }
+
+      // Simple login (no backend, just allow entry)
+      document.getElementById("login").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    }
+
+    // Page navigation
+    function showPage(pageId) {
+      document.querySelectorAll("#main-content section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    }
+
+    // Chatbot logic
+    function sendMessage() {
+      let input = document.getElementById("user-input");
+      let message = input.value.trim();
+
+      if (message === "") return;
+
+      let chatBox = document.getElementById("chat-box");
+
+      // User message
+      let userDiv = document.createElement("div");
+      userDiv.className = "user-message";
+      userDiv.innerText = message;
+      chatBox.appendChild(userDiv);
+
+      // Bot response
+      setTimeout(() => {
+        let botDiv = document.createElement("div");
+        botDiv.className = "bot-message";
+        botDiv.innerText = getBotResponse(message);
+        chatBox.appendChild(botDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 800);
+
+      input.value = "";
+    }
+
+    function getBotResponse(input) {
+      input = input.toLowerCase();
+
+      if (input.includes("fever")) {
+        return "🤒 Fever may be due to malaria, typhoid, or viral infections. Drink water and rest. If it persists, consult a doctor.";
+      } else if (input.includes("diabetes")) {
+        return "🍚 Diabetes needs lifestyle care: balanced food, exercise, and avoiding sugar.";
+      } else if (input.includes("covid")) {
+        return "🦠 COVID-19 spreads via droplets. Wash hands, wear masks, and stay vaccinated.";
+      } else if (input.includes("mental")) {
+        return "💭 Mental health matters. Talk to someone you trust and practice relaxation.";
+      } else {
+        return "ℹ️ I can share awareness about fever, diabetes, COVID-19, and mental health. Try asking about these!";
+      }
+    }
+  </script>
+</body>
+</html>
